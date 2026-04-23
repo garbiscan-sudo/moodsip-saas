@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { Wine, HelpCircle, QrCode, ArrowRight, TrendingUp } from 'lucide-react'
 
+type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired'
+
 export default async function DashboardPage() {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -20,32 +22,34 @@ export default async function DashboardPage() {
   const trialDaysLeft = bar?.trial_ends_at
     ? Math.max(0, Math.ceil((new Date(bar.trial_ends_at).getTime() - Date.now()) / 86400000))
     : 0
-type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired'
-  const statusBadge = {
+
+  const status = (bar?.subscription_status as SubscriptionStatus) || 'trial'
+
+  const statusBadge: Record<SubscriptionStatus, { label: string; cls: string }> = {
     trial:     { label: `Deneme — ${trialDaysLeft} gün kaldı`, cls: 'badge-gold' },
     active:    { label: 'Aktif Abonelik', cls: 'badge-green' },
     cancelled: { label: 'İptal Edildi', cls: 'badge-red' },
     expired:   { label: 'Süresi Doldu', cls: 'badge-red' },
-  }[(bar?.subscription_status as SubscriptionStatus) || 'trial']
+  }
+
+  const { label, cls } = statusBadge[status]
 
   const stats = [
-    { label: 'Kokteyl', value: cocktailCount ?? 0, icon: Wine,        href: '/dashboard/cocktails' },
+    { label: 'Kokteyl',    value: cocktailCount ?? 0, icon: Wine,        href: '/dashboard/cocktails' },
     { label: 'Quiz Sorusu', value: questionCount ?? 0, icon: HelpCircle, href: '/dashboard/questions' },
-    { label: 'QR Kod', value: '1 adet', icon: QrCode,       href: '/dashboard/qr' },
+    { label: 'QR Kod',     value: '1 adet',           icon: QrCode,      href: '/dashboard/qr' },
   ]
 
   return (
     <div className="space-y-8 animate-fade-in-up">
-      {/* Header */}
       <div className="flex items-start justify-between">
         <div>
           <h1 className="font-serif text-4xl text-gold mb-1">{bar?.name}</h1>
           {bar?.tagline && <p className="text-white/40 italic">{bar.tagline}</p>}
         </div>
-        <span className={statusBadge.cls}>{statusBadge.label}</span>
+        <span className={cls}>{label}</span>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {stats.map(({ label, value, icon: Icon, href }) => (
           <Link key={label} href={href}
@@ -62,7 +66,6 @@ type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired'
         ))}
       </div>
 
-      {/* Quick actions */}
       <div className="glass rounded-2xl p-6">
         <h2 className="font-semibold mb-4 flex items-center gap-2">
           <TrendingUp size={16} className="text-gold" />
@@ -92,7 +95,6 @@ type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired'
         </div>
       </div>
 
-      {/* Quiz URL */}
       {bar?.slug && (
         <div className="glass rounded-2xl p-6 border-gold/10">
           <div className="text-sm text-white/40 mb-2">Quiz sayfanızın adresi</div>
