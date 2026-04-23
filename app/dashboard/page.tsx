@@ -20,13 +20,13 @@ export default async function DashboardPage() {
   const trialDaysLeft = bar?.trial_ends_at
     ? Math.max(0, Math.ceil((new Date(bar.trial_ends_at).getTime() - Date.now()) / 86400000))
     : 0
-
+type SubscriptionStatus = 'trial' | 'active' | 'cancelled' | 'expired'
   const statusBadge = {
     trial:     { label: `Deneme — ${trialDaysLeft} gün kaldı`, cls: 'badge-gold' },
     active:    { label: 'Aktif Abonelik', cls: 'badge-green' },
     cancelled: { label: 'İptal Edildi', cls: 'badge-red' },
     expired:   { label: 'Süresi Doldu', cls: 'badge-red' },
-  }[bar?.subscription_status || 'trial']
+  }[(bar?.subscription_status as SubscriptionStatus) || 'trial']
 
   const stats = [
     { label: 'Kokteyl', value: cocktailCount ?? 0, icon: Wine,        href: '/dashboard/cocktails' },
