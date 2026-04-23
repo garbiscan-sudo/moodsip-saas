@@ -270,3 +270,8 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
       </section>
     </div>
   )
+
+  function formatCard(v: string) {
+    return v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
+  }
+}
