@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold:      #d4af37;
+    --gold-light: #f7e7ce;
+    --obsidian:  #0d0d0d;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background-color: var(--obsidian);
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(212,175,55,0.3);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #111; }
+  ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.4); border-radius: 3px; }
+}
+
+@layer components {
+  /* Glass card */
+  .glass {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Gold button */
+  .btn-gold {
+    @apply bg-gold text-obsidian font-semibold px-8 py-3 rounded-full 
+           transition-all duration-300 hover:-translate-y-0.5
+           hover:shadow-[0_8px_25px_rgba(212,175,55,0.4)]
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0;
+  }
+
+  /* Outline button */
+  .btn-outline {
+    @apply border border-gold text-gold font-semibold px-8 py-3 rounded-full
+           transition-all duration-300 hover:bg-gold/10 hover:-translate-y-0.5
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Form input */
+  .input-field {
+    @apply w-full bg-obsidian-800 border border-glass-border rounded-xl px-4 py-3
+           text-white placeholder-white/30 focus:outline-none focus:border-gold/50
+           transition-colors duration-200;
+  }
+
+  /* Dashboard sidebar link */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/60
+           hover:text-white hover:bg-white/5 transition-all duration-200
+           font-medium text-sm;
+  }
+  .sidebar-link.active {
+    @apply text-gold bg-gold/10 border border-gold/20;
+  }
+
+  /* Section heading */
+  .section-title {
+    @apply font-serif text-4xl font-normal text-gold;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+  }
+  .badge-gold   { @apply badge bg-gold/10 text-gold border border-gold/20; }
+  .badge-green  { @apply badge bg-green-500/10 text-green-400 border border-green-500/20; }
+  .badge-red    { @apply badge bg-red-500/10 text-red-400 border border-red-500/20; }
+  .badge-gray   { @apply badge bg-white/5 text-white/50 border border-white/10; }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #d4af37 0%, #f7e7ce 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-radial-gold {
+    background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 60%);
+  }
+}
