@@ -271,3 +271,4 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
     </div>
   )
 }
+// updated
