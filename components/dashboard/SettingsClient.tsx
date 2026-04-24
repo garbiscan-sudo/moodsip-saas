@@ -75,6 +75,10 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
     }
   }
 
+  function formatCard(v: string) {
+    return v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
+  }
+
   const isActive = bar.subscription_status === 'active'
   const trialLeft = bar.trial_ends_at
     ? Math.max(0, Math.ceil((new Date(bar.trial_ends_at).getTime() - Date.now()) / 86400000))
