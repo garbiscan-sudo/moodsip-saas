@@ -1,13 +1,11 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
 import {
   QrCode, LayoutDashboard, Sparkles, ChevronRight,
   Check, Star, Zap, Shield, RefreshCw
 } from 'lucide-react'
 
-const PRICE_MONTHLY = process.env.NEXT_PUBLIC_PRICE_MONTHLY || '299'
-const PRICE_YEARLY  = process.env.NEXT_PUBLIC_PRICE_YEARLY  || '2490'
+const PRICE_YEARLY = '25.000'
 
 const features = [
   { icon: QrCode,          title: 'QR Kod Menü',          desc: 'Masaya QR yapıştır, müşteri okusun. Saniyeler içinde deneyim başlar.' },
@@ -25,7 +23,6 @@ const testimonials = [
 ]
 
 export default function LandingPage() {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly')
 
   return (
     <div className="min-h-screen bg-obsidian bg-radial-gold">
@@ -137,40 +134,15 @@ export default function LandingPage() {
         <div className="text-center mb-12">
           <h2 className="section-title mb-4">Şeffaf fiyatlandırma</h2>
           <p className="text-white/50 mb-8">Gizli ücret yok. İstediğiniz zaman iptal.</p>
-
-          {/* Toggle */}
-          <div className="inline-flex glass rounded-full p-1 gap-1">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                billingCycle === 'monthly' ? 'bg-gold text-obsidian' : 'text-white/60 hover:text-white'
-              }`}
-            >
-              Aylık
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                billingCycle === 'yearly' ? 'bg-gold text-obsidian' : 'text-white/60 hover:text-white'
-              }`}
-            >
-              Yıllık
-              <span className={`text-xs px-2 py-0.5 rounded-full ${
-                billingCycle === 'yearly' ? 'bg-obsidian/20' : 'bg-gold/20 text-gold'
-              }`}>
-                %30 tasarruf
-              </span>
-            </button>
-          </div>
         </div>
 
         <div className="glass rounded-3xl p-8 border-gold/20 text-center max-w-md mx-auto">
-          <div className="badge-gold mb-4 mx-auto w-fit">En popüler</div>
+          <div className="badge-gold mb-4 mx-auto w-fit">Yıllık Plan</div>
           <div className="font-serif text-6xl text-gold mb-2">
-            ₺{billingCycle === 'monthly' ? PRICE_MONTHLY : PRICE_YEARLY}
+            ₺{PRICE_YEARLY}
           </div>
           <div className="text-white/40 text-sm mb-8">
-            {billingCycle === 'monthly' ? 'aylık · KDV dahil' : 'yıllık · KDV dahil · aylık ₺207,5'}
+            yıllık · KDV dahil
           </div>
 
           <div className="space-y-3 text-left mb-8">
