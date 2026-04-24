@@ -5,8 +5,7 @@ import { createAdmin } from '@/lib/supabase/server'
 import { v4 as uuid } from 'uuid'
 
 const PLANS = {
-  monthly: { price: process.env.NEXT_PUBLIC_PRICE_MONTHLY || '299', label: 'Aylık' },
-  yearly:  { price: process.env.NEXT_PUBLIC_PRICE_YEARLY  || '2490', label: 'Yıllık' },
+  yearly:  { price: '25000', label: 'Yıllık' },
 }
 
 export async function POST(req: NextRequest) {

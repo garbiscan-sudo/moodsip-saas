@@ -12,24 +12,17 @@ export const iyzipay = new Iyzipay({
 
 // Fiyatlar (TL, kuruş cinsinden string — İyzico kuruş ister)
 export const PLANS = {
-  monthly: {
-    label:        'Aylık',
-    price:        process.env.NEXT_PUBLIC_PRICE_MONTHLY || '299',
-    priceDisplay: `₺${process.env.NEXT_PUBLIC_PRICE_MONTHLY || '299'}/ay`,
-    referenceCode: 'MOODSIP_MONTHLY',
-  },
   yearly: {
     label:        'Yıllık',
-    price:        process.env.NEXT_PUBLIC_PRICE_YEARLY || '2490',
-    priceDisplay: `₺${process.env.NEXT_PUBLIC_PRICE_YEARLY || '2490'}/yıl`,
+    price:        '25000',
+    priceDisplay: '₺25.000/yıl',
     referenceCode: 'MOODSIP_YEARLY',
-    savingsLabel: '%30 tasarruf',
   },
 }
 
 // Tek seferlik ödeme (sonra aboneliğe geçiş için)
 export async function createPayment(params: {
-  plan:           'monthly' | 'yearly'
+  plan:           'yearly'
   conversationId: string
   buyerEmail:     string
   buyerName:      string
