@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     const { barId, plan, buyerEmail, buyerName, buyerSurname, buyerPhone,
             cardHolderName, cardNumber, expireMonth, expireYear, cvc } = body
 
-    const p = PLANS[plan as 'monthly' | 'yearly']
+    const p = PLANS['yearly']
     const conversationId = uuid()
 
     const payload = {
