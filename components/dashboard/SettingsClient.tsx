@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
-import { Check, CreditCard, Lock, Shield } from 'lucide-react'
+import { Check, CreditCard, Lock, Shield, Upload, X } from 'lucide-react'
 import type { Bar } from '@/lib/types'
 
 const PRICE_MONTHLY = process.env.NEXT_PUBLIC_PRICE_MONTHLY || '299'
@@ -14,11 +15,14 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
   const [plan, setPlan]     = useState<'monthly' | 'yearly'>('yearly')
   const [payStep, setPayStep] = useState(false)
   const [payLoading, setPayLoading] = useState(false)
+  const [logoUploading, setLogoUploading] = useState(false)
+  const logoInputRef = useRef<HTMLInputElement>(null)
 
   const [branding, setBranding] = useState({
     name:          bar.name,
     tagline:       bar.tagline || '',
     primary_color: bar.primary_color,
+    logo_url:      bar.logo_url || '',
   })
 
   const [payment, setPayment] = useState({
@@ -33,11 +37,49 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
       name:          branding.name,
       tagline:       branding.tagline || null,
       primary_color: branding.primary_color,
+      logo_url:      branding.logo_url || null,
     }).eq('id', bar.id)
     if (error) toast.error('Kaydedilemedi')
     else toast.success('Ayarlar kaydedildi')
     setSaving(false)
   }
+
+  async function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error('Logo 2MB\'dan küçük olmalı')
+      return
+    }
+    setLogoUploading(true)
+    try {
+      const ext = file.name.split('.').pop()
+      const path = `${bar.id}/logo.${ext}`
+      const { error: upErr } = await supabase.storage
+        .from('bar-assets')
+        .upload(path, file, { upsert: true })
+      if (upErr) throw upErr
+      const { data: { publicUrl } } = supabase.storage
+        .from('bar-assets')
+        .getPublicUrl(path)
+      setBranding(b => ({ ...b, logo_url: publicUrl }))
+      await supabase.from('bars').update({ logo_url: publicUrl }).eq('id', bar.id)
+      toast.success('Logo yüklendi!')
+    } catch {
+      toast.error('Logo yüklenemedi')
+    } finally {
+      setLogoUploading(false)
+    }
+  }
+
+  async function removeLogo() {
+    await supabase.from('bars').update({ logo_url: null }).eq('id', bar.id)
+    setBranding(b => ({ ...b, logo_url: '' }))
+    toast.success('Logo kaldırıldı')
+  }
+
+  const formatCard = (v: string) =>
+    v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
 
   async function handlePayment(e: React.FormEvent) {
     e.preventDefault()
@@ -75,10 +117,6 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
     }
   }
 
-  function formatCard(v: string) {
-    return v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
-  }
-
   const isActive = bar.subscription_status === 'active'
   const trialLeft = bar.trial_ends_at
     ? Math.max(0, Math.ceil((new Date(bar.trial_ends_at).getTime() - Date.now()) / 86400000))
@@ -104,6 +142,35 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
                 onChange={e => setBranding(b => ({ ...b, tagline: e.target.value }))} />
             </div>
           </div>
+          <div>
+            <label className="block text-sm text-white/60 mb-1.5">Logo</label>
+            <div className="flex items-center gap-4">
+              {branding.logo_url ? (
+                <div className="relative w-16 h-16">
+                  <Image src={branding.logo_url} alt="Logo" fill className="rounded-xl object-cover border border-glass-border" />
+                  <button type="button" onClick={removeLogo}
+                    className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center hover:bg-red-400 transition-colors">
+                    <X size={10} />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-16 h-16 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-white/20">
+                  <Upload size={20} />
+                </div>
+              )}
+              <div>
+                <input ref={logoInputRef} type="file" accept="image/*" className="hidden"
+                  onChange={handleLogoUpload} />
+                <button type="button" onClick={() => logoInputRef.current?.click()}
+                  disabled={logoUploading}
+                  className="btn-outline text-sm px-4 py-2">
+                  {logoUploading ? 'Yükleniyor...' : 'Logo Yükle'}
+                </button>
+                <p className="text-white/25 text-xs mt-1">PNG, JPG veya SVG · max 2MB</p>
+              </div>
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm text-white/60 mb-1.5">Marka Rengi</label>
             <div className="flex items-center gap-3">
@@ -270,8 +337,5 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
       </section>
     </div>
   )
-
-  function formatCard(v: string) {
-    return v.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()
-  }
 }
+
