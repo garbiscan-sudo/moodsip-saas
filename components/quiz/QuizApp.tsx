@@ -81,7 +81,7 @@ export default function QuizApp({ bar, questions, cocktails }: Props) {
         style={{ background: `radial-gradient(circle at 50% 30%, ${gold}10 0%, transparent 60%)` }} />
 
       {bar.logo_url ? (
-        <Image src={bar.logo_url} alt={bar.name} width={80} height={80} className="rounded-2xl mb-6 object-cover" />
+        <Image src={bar.logo_url} alt={bar.name} width={160} height={160} className="rounded-2xl mb-6 object-cover" />
       ) : (
         <div className="font-serif text-5xl mb-2" style={{ color: gold }}>{bar.name}</div>
       )}
