@@ -55,7 +55,7 @@ export default function QuizApp({ bar, questions, cocktails }: Props) {
             + Math.random() * 0.05,
         }))
         scored.sort((a, b) => b.score - a.score)
-        setResults(scored.slice(0, 3).map(s => s.cocktail))
+        setResults(scored.slice(0, bar.result_count ?? 3).map(s => s.cocktail))
         setScreen('result')
       }
     }, 300)
