@@ -22,6 +22,7 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
     tagline:       bar.tagline || '',
     primary_color: bar.primary_color,
     logo_url:      bar.logo_url || '',
+    result_count:  bar.result_count ?? 3,
   })
 
   const [payment, setPayment] = useState({
@@ -37,6 +38,7 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
       tagline:       branding.tagline || null,
       primary_color: branding.primary_color,
       logo_url:      branding.logo_url || null,
+      result_count:  branding.result_count,
     }).eq('id', bar.id)
     if (error) toast.error('Kaydedilemedi')
     else toast.success('Ayarlar kaydedildi')
@@ -182,6 +184,27 @@ export default function SettingsClient({ bar, userEmail }: { bar: Bar; userEmail
                 style={{ background: branding.primary_color }} />
             </div>
             <p className="text-white/30 text-xs mt-1">Bu renk quiz sayfasındaki buton ve vurgularda kullanılır.</p>
+          </div>
+
+          <div>
+            <label className="block text-sm text-white/60 mb-1.5">Quiz Sonuç Sayısı</label>
+            <p className="text-white/30 text-xs mb-3">Müşterilere kaç kokteyl önerisi gösterilsin?</p>
+            <div className="flex gap-2">
+              {[1, 2, 3, 4, 5].map(n => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => setBranding(b => ({ ...b, result_count: n }))}
+                  className={`w-10 h-10 rounded-xl text-sm font-medium border transition-all ${
+                    branding.result_count === n
+                      ? 'border-gold bg-gold/10 text-gold'
+                      : 'border-glass-border text-white/40 hover:border-white/30'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="pt-2">

@@ -13,6 +13,7 @@ export interface Bar {
   tagline:                string | null
   logo_url:               string | null
   primary_color:          string
+  result_count:           number
   bg_color:               string
   subscription_status:    SubscriptionStatus
   subscription_plan:      SubscriptionPlan | null
