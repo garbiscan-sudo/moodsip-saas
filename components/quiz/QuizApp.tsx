@@ -104,7 +104,7 @@ export default function QuizApp({ bar, questions, cocktails }: Props) {
         Quiz'e Başla
       </button>
 
-      <p className="text-white/20 text-xs mt-8 italic">Crafted by MoodSip</p>
+      <a href="https://www.clubbymedia.com/" target="_blank" rel="noopener noreferrer" className="text-white/20 text-xs mt-8 italic hover:text-white/40 transition-colors">Created by Clubby Media</a>
     </div>
   )
 
