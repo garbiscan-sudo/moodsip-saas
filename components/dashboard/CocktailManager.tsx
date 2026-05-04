@@ -10,6 +10,7 @@ const COMMON_TAGS = [
   'bitter','sweet','sour','fresh','strong','light','medium','bold',
   'floral','herbal','smoky','spicy','creamy','fruity','tropical',
   'romantic','playful','mysterious','adventurous','chill','high-energy','nostalgic','social',
+  'gin-based','whiskey-based','rum-based','vodka-based','tequila-based','sparkling-based',
 ]
 
 interface CocktailFormData {
