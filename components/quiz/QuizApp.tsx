@@ -222,7 +222,7 @@ export default function QuizApp({ bar, questions, cocktails }: Props) {
         </button>
       </div>
 
-      <p className="text-center text-white/15 text-xs mt-8 italic">Powered by MoodSip</p>
+      <a href="https://www.clubbymedia.com/" target="_blank" rel="noopener noreferrer" className="text-center text-white/15 text-xs mt-8 italic hover:text-white/40 transition-colors block">Created by Clubby Media</a>
     </div>
   )
 }
