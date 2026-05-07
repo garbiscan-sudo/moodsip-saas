@@ -1,9 +1,16 @@
-'use client'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   QrCode, LayoutDashboard, Sparkles, ChevronRight,
-  Check, Star, Zap, Shield, RefreshCw
+  Check, Star, Zap, Shield, RefreshCw, HelpCircle
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'MoodSip — Barınız İçin Akıllı Kokteyl Öneri Sistemi',
+  description:
+    'Bar müşterilerine ruh haline göre kokteyl önerin. QR kod ile erişilen interaktif mood quiz sistemi. 14 gün ücretsiz deneyin.',
+  alternates: { canonical: 'https://www.moodsip.com.tr' },
+}
 
 const PRICE_YEARLY = '25.000'
 
@@ -22,8 +29,34 @@ const testimonials = [
   { quote: 'Misafirlerimiz quizi bir oyun gibi oynuyor. Masada geçirdikleri süre belirgin şekilde uzadı.', name: 'Mehmet A.', bar: 'Copper Mug, Ankara' },
 ]
 
-export default function LandingPage() {
+const faqs = [
+  {
+    q: 'MoodSip nedir ve nasıl çalışır?',
+    a: 'MoodSip, bar ve restoranlara özel bir kokteyl öneri sistemidir. Müşteriler masadaki QR kodu okutarak kısa bir mood quizine katılır. Verdikleri yanıtlara göre sistem, onlara en uygun kokteyli önerir. Tüm içerik (kokteyller, sorular, görseller) barın kendi panelinden yönetilir.',
+  },
+  {
+    q: 'Teknik bilgim yok, kurabilir miyim?',
+    a: 'Evet, kesinlikle. MoodSip kod gerektirmez. Üye olduktan sonra kokteylinizi ekleyin, sorularınızı girin ve QR kodunuzu indirin. Masaya yapıştırın — sistem hazır. Ortalama kurulum süresi 30 dakikadır.',
+  },
+  {
+    q: 'Kaç kokteyl ve soru ekleyebilirim?',
+    a: 'Sınır yoktur. İstediğiniz kadar kokteyl ve quiz sorusu ekleyebilirsiniz. Görseller, malzeme listeleri ve etiketler dahil tüm içeriği panelinden yönetirsiniz.',
+  },
+  {
+    q: 'Müşteri verilerim güvende mi?',
+    a: 'MoodSip, quiz sürecinde hiçbir kişisel müşteri verisi toplamaz. Sistem anonim çalışır; müşteriler yalnızca sorulara yanıt verir ve kokteyl önerisi alır.',
+  },
+  {
+    q: 'Birden fazla şube için kullanabilir miyim?',
+    a: 'Her şube için ayrı bir MoodSip hesabı açılabilir. Her hesabın kendine özel QR kodu, paneli ve kokteyl listesi bulunur.',
+  },
+  {
+    q: '14 günlük deneme bitince ne olur?',
+    a: 'Deneme süresi sonunda yıllık abonelik planına geçmeniz gerekir. Abonelik başlatılmazsa quiz sayfası pasif olur ancak verileriniz silinmez.',
+  },
+]
 
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-obsidian bg-radial-gold">
 
@@ -54,8 +87,9 @@ export default function LandingPage() {
         </h1>
 
         <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          QR kod ile erişilen interaktif bir mood quiz. Müşteri soruları yanıtlar,
-          sistem en uygun kokteylinizi önerir. Menünüzü panelden istediğiniz an güncelleyin.
+          Bar ve restoranlar için QR kod tabanlı interaktif kokteyl öneri sistemi.
+          Müşteri soruları yanıtlar, sistem en uygun kokteylinizi önerir.
+          Menünüzü panelden istediğiniz an güncelleyin.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -75,9 +109,9 @@ export default function LandingPage() {
             <h3 className="font-serif text-2xl mb-6">Bu gece nasıl hissediyorsunuz?</h3>
             <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
               {['Kutlamaya hazırım ✨', 'Sessiz bir kaçış 🌊', 'Maceraya açığım 🌋', 'Özel bir an 💫'].map(opt => (
-                <button key={opt} className="glass rounded-xl p-3 text-sm text-white/80 hover:border-gold/40 hover:text-white transition-all">
+                <div key={opt} className="glass rounded-xl p-3 text-sm text-white/80">
                   {opt}
-                </button>
+                </div>
               ))}
             </div>
           </div>
@@ -87,9 +121,9 @@ export default function LandingPage() {
       {/* ── FEATURES ────────────────────────── */}
       <section className="px-6 py-24 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="section-title mb-4">Her şey dahil</h2>
+          <h2 className="section-title mb-4">Bar deneyimini dönüştüren her şey</h2>
           <p className="text-white/50 max-w-xl mx-auto">
-            Teknik karmaşa yok. Açtığınız günden itibaren çalışır.
+            Teknik karmaşa yok. Kurulum gerektirmez. Açtığınız günden itibaren çalışır.
           </p>
         </div>
 
@@ -110,6 +144,7 @@ export default function LandingPage() {
       <section id="how-it-works" className="px-6 py-24 max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="section-title mb-4">3 adımda canlıya alın</h2>
+          <p className="text-white/50">Kurulum yok. Teknik bilgi gerekmez.</p>
         </div>
 
         <div className="space-y-8">
@@ -188,6 +223,45 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── FAQ ─────────────────────────────── */}
+      <section id="faq" className="px-6 py-24 max-w-3xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="section-title mb-4">Sıkça sorulan sorular</h2>
+          <p className="text-white/50">Aklınızdaki soruların cevapları burada.</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map(({ q, a }) => (
+            <div key={q} className="glass rounded-2xl p-6">
+              <div className="flex gap-3 items-start mb-3">
+                <HelpCircle size={18} className="text-gold shrink-0 mt-0.5" />
+                <h3 className="font-semibold text-white">{q}</h3>
+              </div>
+              <p className="text-white/50 text-sm leading-relaxed pl-7">{a}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* FAQ Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: faqs.map(({ q, a }) => ({
+                '@type': 'Question',
+                name: q,
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: a,
+                },
+              })),
+            }),
+          }}
+        />
+      </section>
+
       {/* ── CTA ─────────────────────────────── */}
       <section className="px-6 py-24 text-center">
         <div className="glass rounded-3xl p-12 max-w-2xl mx-auto border-gold/20">
@@ -202,7 +276,13 @@ export default function LandingPage() {
       {/* ── FOOTER ──────────────────────────── */}
       <footer className="border-t border-white/5 px-6 py-8 text-center">
         <div className="font-serif text-gold text-xl tracking-widest mb-2">MoodSip</div>
-        <p className="text-white/30 text-sm italic">Crafted for your spirit</p>
+        <p className="text-white/30 text-sm italic mb-4">Barınız için akıllı kokteyl öneri sistemi</p>
+        <div className="flex justify-center gap-6 text-white/20 text-xs">
+          <Link href="/auth/login" className="hover:text-white/50 transition-colors">Giriş Yap</Link>
+          <Link href="/auth/register" className="hover:text-white/50 transition-colors">Kayıt Ol</Link>
+          <Link href="#faq" className="hover:text-white/50 transition-colors">SSS</Link>
+          <Link href="#pricing" className="hover:text-white/50 transition-colors">Fiyatlar</Link>
+        </div>
       </footer>
     </div>
   )
