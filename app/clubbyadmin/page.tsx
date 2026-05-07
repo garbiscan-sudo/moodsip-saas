@@ -16,7 +16,7 @@ export default async function AdminPage() {
     .from('bars')
     .select('owner_id, name')
 
-  const ownerIds = [...new Set((bars || []).map(b => b.owner_id))]
+  const ownerIds = Array.from(new Set((bars || []).map(b => b.owner_id)))
 
   // Kullanıcı emaillerini çek
   const userEmails: Record<string, string> = {}
