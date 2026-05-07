@@ -5,10 +5,12 @@ import {
   Check, Star, Zap, Shield, RefreshCw, HelpCircle
 } from 'lucide-react'
 
+import HeroHeading from '@/components/landing/HeroHeading'
+
 export const metadata: Metadata = {
-  title: 'MoodSip — Barınız İçin Akıllı Kokteyl Öneri Sistemi',
+  title: 'MoodSip — İşletmeniz İçin Akıllı Menü Öneri Sistemi',
   description:
-    'Bar müşterilerine ruh haline göre kokteyl önerin. QR kod ile erişilen interaktif mood quiz sistemi. 14 gün ücretsiz deneyin.',
+    'Müşterilerinize ruh haline göre ürün önerin. Bar, kafe ve restoranlar için QR kod tabanlı interaktif mood quiz sistemi. 14 gün ücretsiz deneyin.',
   alternates: { canonical: 'https://www.moodsip.com.tr' },
 }
 
@@ -16,8 +18,8 @@ const PRICE_YEARLY = '25.000'
 
 const features = [
   { icon: QrCode,          title: 'QR Kod Menü',          desc: 'Masaya QR yapıştır, müşteri okusun. Saniyeler içinde deneyim başlar.' },
-  { icon: Sparkles,        title: 'Mood Quiz',             desc: 'Müşteriye 5 soru sor, ruh haline göre en iyi kokteylli öner.' },
-  { icon: LayoutDashboard, title: 'Canlı Panel',           desc: 'Kokteyllerini, sorularını ve görsellerini istediğin zaman güncelle.' },
+  { icon: Sparkles,        title: 'Mood Quiz',             desc: 'Müşteriye birkaç soru sor, ruh haline göre en uygun ürünü öner.' },
+  { icon: LayoutDashboard, title: 'Canlı Panel',           desc: 'Menüdeki ürünlerini, sorularını ve görsellerini istediğin zaman güncelle.' },
   { icon: RefreshCw,       title: 'Anlık Güncelleme',      desc: 'Panelden yaptığın değişiklik QR kod sayfasına anında yansır.' },
   { icon: Zap,             title: 'Sıfır Teknik Bilgi',    desc: 'Kod yazmak yok. Sürükle-bırak ile tüm içeriğini yönet.' },
   { icon: Shield,          title: 'Markan, Renklerin',     desc: 'Logo, renk paleti ve metin tonun. Tamamen senin kimliğin.' },
@@ -32,23 +34,23 @@ const testimonials = [
 const faqs = [
   {
     q: 'MoodSip nedir ve nasıl çalışır?',
-    a: 'MoodSip, bar ve restoranlara özel bir kokteyl öneri sistemidir. Müşteriler masadaki QR kodu okutarak kısa bir mood quizine katılır. Verdikleri yanıtlara göre sistem, onlara en uygun kokteyli önerir. Tüm içerik (kokteyller, sorular, görseller) barın kendi panelinden yönetilir.',
+    a: 'MoodSip, bar, kafe, restoran ve kafeterya gibi işletmelere özel bir menü öneri sistemidir. Müşteriler masadaki QR kodu okutarak kısa bir mood quizine katılır. Verdikleri yanıtlara göre sistem, onlara en uygun ürünü önerir. Tüm içerik (ürünler, sorular, görseller) işletmenin kendi panelinden yönetilir.',
   },
   {
     q: 'Teknik bilgim yok, kurabilir miyim?',
-    a: 'Evet, kesinlikle. MoodSip kod gerektirmez. Üye olduktan sonra kokteylinizi ekleyin, sorularınızı girin ve QR kodunuzu indirin. Masaya yapıştırın — sistem hazır. Ortalama kurulum süresi 30 dakikadır.',
+    a: 'Evet, kesinlikle. MoodSip kod gerektirmez. Üye olduktan sonra ürünlerinizi ekleyin, sorularınızı girin ve QR kodunuzu indirin. Masaya yapıştırın — sistem hazır. Ortalama kurulum süresi 30 dakikadır.',
   },
   {
-    q: 'Kaç kokteyl ve soru ekleyebilirim?',
-    a: 'Sınır yoktur. İstediğiniz kadar kokteyl ve quiz sorusu ekleyebilirsiniz. Görseller, malzeme listeleri ve etiketler dahil tüm içeriği panelinden yönetirsiniz.',
+    q: 'Kaç ürün ve soru ekleyebilirim?',
+    a: 'Sınır yoktur. İstediğiniz kadar ürün ve quiz sorusu ekleyebilirsiniz. Görseller, içerik listeleri ve etiketler dahil tüm içeriği panelinden yönetirsiniz.',
   },
   {
     q: 'Müşteri verilerim güvende mi?',
-    a: 'MoodSip, quiz sürecinde hiçbir kişisel müşteri verisi toplamaz. Sistem anonim çalışır; müşteriler yalnızca sorulara yanıt verir ve kokteyl önerisi alır.',
+    a: 'MoodSip, quiz sürecinde hiçbir kişisel müşteri verisi toplamaz. Sistem anonim çalışır; müşteriler yalnızca sorulara yanıt verir ve ürün önerisi alır.',
   },
   {
     q: 'Birden fazla şube için kullanabilir miyim?',
-    a: 'Her şube için ayrı bir MoodSip hesabı açılabilir. Her hesabın kendine özel QR kodu, paneli ve kokteyl listesi bulunur.',
+    a: 'Her şube için ayrı bir MoodSip hesabı açılabilir. Her hesabın kendine özel QR kodu, paneli ve ürün listesi bulunur.',
   },
   {
     q: '14 günlük deneme bitince ne olur?',
@@ -80,15 +82,11 @@ export default function LandingPage() {
           14 gün ücretsiz deneme — kredi kartı gerekmez
         </div>
 
-        <h1 className="font-serif text-5xl md:text-7xl font-normal mb-6 leading-tight">
-          Müşterinize{' '}
-          <span className="text-gradient-gold italic">ruh haline göre</span>
-          <br />kokteyl öner
-        </h1>
+        <HeroHeading />
 
         <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Bar ve restoranlar için QR kod tabanlı interaktif kokteyl öneri sistemi.
-          Müşteri soruları yanıtlar, sistem en uygun kokteylinizi önerir.
+          Bar, kafe, restoran ve kafeterya işletmeleri için QR kod tabanlı interaktif menü öneri sistemi.
+          Müşteri soruları yanıtlar, sistem en uygun ürünü önerir.
           Menünüzü panelden istediğiniz an güncelleyin.
         </p>
 
@@ -121,7 +119,7 @@ export default function LandingPage() {
       {/* ── FEATURES ────────────────────────── */}
       <section className="px-6 py-24 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="section-title mb-4">Bar deneyimini dönüştüren her şey</h2>
+          <h2 className="section-title mb-4">İşletmenizi dönüştüren her şey</h2>
           <p className="text-white/50 max-w-xl mx-auto">
             Teknik karmaşa yok. Kurulum gerektirmez. Açtığınız günden itibaren çalışır.
           </p>
@@ -149,8 +147,8 @@ export default function LandingPage() {
 
         <div className="space-y-8">
           {[
-            { n: '01', title: 'Üye ol ve paneli aç', desc: '14 günlük ücretsiz denemeni başlat. Kredi kartı gerekmez. Bar bilgilerini gir, hazırsın.' },
-            { n: '02', title: 'Kokteyllerini ve soruları ekle', desc: 'Panelden kokteyllerini, malzemeleri, görselleri ve mood quiz sorularını ekle. Sürükle bırak ile sırala.' },
+            { n: '01', title: 'Üye ol ve paneli aç', desc: '14 günlük ücretsiz denemeni başlat. Kredi kartı gerekmez. İşletme bilgilerini gir, hazırsın.' },
+            { n: '02', title: 'Ürünlerini ve soruları ekle', desc: 'Panelden ürünlerini, malzemeleri, görselleri ve mood quiz sorularını ekle. Sürükle bırak ile sırala.' },
             { n: '03', title: 'QR kodu indir ve yapıştır', desc: 'Otomatik oluşturulan QR kodu masalara yapıştır. Müşteriler okuttuğunda doğrudan senin quiz sayfana gider.' },
           ].map(({ n, title, desc }) => (
             <div key={n} className="flex gap-6 items-start glass rounded-2xl p-6">
@@ -182,7 +180,7 @@ export default function LandingPage() {
 
           <div className="space-y-3 text-left mb-8">
             {[
-              'Sınırsız kokteyl ekle',
+              'Sınırsız ürün ekle',
               'Sınırsız soru & seçenek',
               'Özel QR kod oluşturucu',
               'Marka rengi & logo',
@@ -206,7 +204,7 @@ export default function LandingPage() {
 
       {/* ── TESTIMONIALS ────────────────────── */}
       <section className="px-6 py-24 max-w-6xl mx-auto">
-        <h2 className="section-title text-center mb-16">Bar sahipleri ne diyor?</h2>
+        <h2 className="section-title text-center mb-16">İşletme sahipleri ne diyor?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map(({ quote, name, bar }) => (
             <div key={name} className="glass rounded-2xl p-6">
@@ -265,7 +263,7 @@ export default function LandingPage() {
       {/* ── CTA ─────────────────────────────── */}
       <section className="px-6 py-24 text-center">
         <div className="glass rounded-3xl p-12 max-w-2xl mx-auto border-gold/20">
-          <h2 className="font-serif text-4xl mb-4">Barınızı dönüştürmeye hazır mısınız?</h2>
+          <h2 className="font-serif text-4xl mb-4">İşletmenizi dönüştürmeye hazır mısınız?</h2>
           <p className="text-white/50 mb-8">14 gün boyunca ücretsiz deneyin. Beğenmezseniz tek tık iptal.</p>
           <Link href="/auth/register" className="btn-gold">
             Hemen Üye Ol — Ücretsiz Başla
@@ -276,7 +274,7 @@ export default function LandingPage() {
       {/* ── FOOTER ──────────────────────────── */}
       <footer className="border-t border-white/5 px-6 py-8 text-center">
         <div className="font-serif text-gold text-xl tracking-widest mb-2">MoodSip</div>
-        <p className="text-white/30 text-sm italic mb-4">Barınız için akıllı kokteyl öneri sistemi</p>
+        <p className="text-white/30 text-sm italic mb-4">İşletmeniz için akıllı menü öneri sistemi</p>
         <div className="flex justify-center gap-6 text-white/20 text-xs">
           <Link href="/auth/login" className="hover:text-white/50 transition-colors">Giriş Yap</Link>
           <Link href="/auth/register" className="hover:text-white/50 transition-colors">Kayıt Ol</Link>
