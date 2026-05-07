@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import HeroHeading from '@/components/landing/HeroHeading'
 import {
   QrCode, LayoutDashboard, Sparkles, ChevronRight,
   Check, Star, Zap, Shield, RefreshCw, HelpCircle
@@ -81,7 +80,11 @@ export default function LandingPage() {
           14 gün ücretsiz deneme — kredi kartı gerekmez
         </div>
 
-        <HeroHeading />
+        <h1 className="font-serif text-5xl md:text-7xl font-normal mb-6 leading-tight">
+          Müşterinize{' '}
+          <span className="text-gradient-gold italic">ruh haline göre</span>
+          <br />kokteyl öner
+        </h1>
 
         <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
           Bar ve restoranlar için QR kod tabanlı interaktif kokteyl öneri sistemi.
