@@ -180,7 +180,7 @@ export default function LandingPage() {
 
           <div className="space-y-3 text-left mb-8">
             {[
-              'Sınırsız ürün ekle',
+              'Sınırsız ürün & menü ekle',
               'Sınırsız soru & seçenek',
               'Özel QR kod oluşturucu',
               'Marka rengi & logo',
@@ -285,4 +285,3 @@ export default function LandingPage() {
     </div>
   )
 }
-// Thu May  7 16:32:28 +03 2026
